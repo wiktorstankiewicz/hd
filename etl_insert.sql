@@ -30,50 +30,39 @@ DELETE FROM STAGING_PROPERTY WHERE
     apasitedesc IS NULL OR
     utilities IS NULL;
 
-INSERT INTO DIM_UTILITIES (Id, AvailableUtilities)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY utilities), utilities
+INSERT INTO DIM_UTILITIES (AvailableUtilities)
+SELECT DISTINCT utilities FROM STAGING_PROPERTY;
+
+INSERT INTO DIM_LANDCLASS (LandClassCode, LandClassDesc)
+SELECT DISTINCT landclass, lclass FROM STAGING_PROPERTY;
+
+INSERT INTO DIM_LOCATION (City, CityZipCode, StreetType, StreetName)
+SELECT DISTINCT phycity, phyzip, streettype, streetname FROM STAGING_PROPERTY;
+
+INSERT INTO DIM_BUILD_YEAR (Year)
+SELECT DISTINCT yearbuilt FROM STAGING_PROPERTY;
+
+INSERT INTO DIM_BILLING (BillingClass)
+SELECT DISTINCT billingclass FROM STAGING_PROPERTY;
+
+INSERT INTO DIM_SALE_DATE (Year, Quarter, Month)
+SELECT DISTINCT YEAR(totalsaledate), DATEPART(quarter, totalsaledate), DATEPART(month, totalsaledate)
 FROM STAGING_PROPERTY;
 
-INSERT INTO DIM_LANDCLASS (Id, LandClassCode, LandClassDesc)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY landclass), landclass, lclass
-FROM STAGING_PROPERTY;
+INSERT INTO DIM_OWNERSHIP (OwnershipDesc)
+SELECT DISTINCT apaownershipdesc FROM STAGING_PROPERTY;
 
-INSERT INTO DIM_LOCATION (Id, City, CityZipCode, StreetType, StreetName)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY phycity), phycity, phyzip, streettype, streetname
-FROM STAGING_PROPERTY;
+INSERT INTO DIM_ACTIVITY (ActivityDesc)
+SELECT DISTINCT apaactivitydesc FROM STAGING_PROPERTY;
 
-INSERT INTO DIM_BUILD_YEAR (Id, Year)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY yearbuilt), yearbuilt
-FROM STAGING_PROPERTY;
+INSERT INTO DIM_FUNCTION (FunctionDesc)
+SELECT DISTINCT apafunctiondesc FROM STAGING_PROPERTY;
 
-INSERT INTO DIM_BILLING (Id, BillingClass)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY billingclass), billingclass
-FROM STAGING_PROPERTY;
+INSERT INTO DIM_STRUCTURE (StructureDesc)
+SELECT DISTINCT apastructuredesc FROM STAGING_PROPERTY;
 
-INSERT INTO DIM_SALE_DATE (Id, Year, Quarter, Month)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY YEAR(totalsaledate), DATEPART(quarter, totalsaledate), DATEPART(month, totalsaledate)), 
-    YEAR(totalsaledate), DATEPART(quarter, totalsaledate), DATEPART(month, totalsaledate)
-FROM STAGING_PROPERTY;
-
-INSERT INTO DIM_OWNERSHIP (Id, OwnershipDesc)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY apaownershipdesc), apaownershipdesc
-FROM STAGING_PROPERTY;
-
-INSERT INTO DIM_ACTIVITY (Id, ActivityDesc)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY apaactivitydesc), apaactivitydesc
-FROM STAGING_PROPERTY;
-
-INSERT INTO DIM_FUNCTION (Id, FunctionDesc)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY apafunctiondesc), apafunctiondesc
-FROM STAGING_PROPERTY;
-
-INSERT INTO DIM_STRUCTURE (Id, StructureDesc)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY apastructuredesc), apastructuredesc
-FROM STAGING_PROPERTY;
-
-INSERT INTO DIM_SITE (Id, SiteDesc)
-SELECT DISTINCT ROW_NUMBER() OVER (ORDER BY apasitedesc), apasitedesc
-FROM STAGING_PROPERTY;
+INSERT INTO DIM_SITE (SiteDesc)
+SELECT DISTINCT apasitedesc FROM STAGING_PROPERTY;
 
 INSERT INTO FACT_SALES (Pin, TotalSaleValue, TotalEstimateValue, BldgEstimateSqFtValue, LandEstimateAcreValue, ValueShiftPercentage, OwnershipId, ActivityId, FunctionId, StructureId, SiteId, LandClassId, LocationId, BuildYearId, BillingId, SaleDateId)
 SELECT 
