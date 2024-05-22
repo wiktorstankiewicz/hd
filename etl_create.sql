@@ -1,31 +1,31 @@
 -- Create a staging table for raw CSV data with only the necessary columns
 CREATE TABLE STAGING_PROPERTY (
-    pin VARCHAR(255),
+    pin NVARCHAR(255),
     totalsalevalue DOUBLE,
     bldgvalue DOUBLE,
     totalbldgsqft DOUBLE,
     calcacreage DOUBLE,
     yearbuilt INT,
     totalsaledate DATE,
-    landclass VARCHAR(255),
-    lclass VARCHAR(255),
-    phycity VARCHAR(255),
-    phyzip VARCHAR(255),
-    streettype VARCHAR(255),
-    streetname VARCHAR(255),
-    billingclass VARCHAR(255),
-    apaownershipdesc VARCHAR(255),
-    apaactivitydesc VARCHAR(255),
-    apafunctiondesc VARCHAR(255),
-    apastructuredesc VARCHAR(255),
-    apasitedesc VARCHAR(255),
-    utilities VARCHAR(255)
+    landclass NVARCHAR(255),
+    lclass NVARCHAR(255),
+    phycity NVARCHAR(255),
+    phyzip NVARCHAR(255),
+    streettype NVARCHAR(255),
+    streetname NVARCHAR(255),
+    billingclass NVARCHAR(255),
+    apaownershipdesc NVARCHAR(255),
+    apaactivitydesc NVARCHAR(255),
+    apafunctiondesc NVARCHAR(255),
+    apastructuredesc NVARCHAR(255),
+    apasitedesc NVARCHAR(255),
+    utilities NVARCHAR(255)
 );
 
 
 
 CREATE TABLE FACT_SALES (
-    Pin VARCHAR(255) PRIMARY KEY,
+    Pin NVARCHAR(255) PRIMARY KEY,
     TotalSaleValue DOUBLE,
     TotalEstimateValue DOUBLE,
     BldgEstimateSqFtValue DOUBLE,
@@ -45,21 +45,21 @@ CREATE TABLE FACT_SALES (
 
 CREATE TABLE DIM_UTILITIES (
     Id INT PRIMARY KEY,
-    AvailableUtilities VARCHAR(255)
+    AvailableUtilities NVARCHAR(255)
 );
 
 CREATE TABLE DIM_LANDCLASS (
     Id INT PRIMARY KEY,
-    LandClassCode VARCHAR(255),
-    LandClassDesc VARCHAR(255)
+    LandClassCode NVARCHAR(255),
+    LandClassDesc NVARCHAR(255)
 );
 
 CREATE TABLE DIM_LOCATION (
     Id INT PRIMARY KEY,
-    City VARCHAR(255),
-    CityZipCode VARCHAR(255),
-    StreetType VARCHAR(255),
-    StreetName VARCHAR(255)
+    City NVARCHAR(255),
+    CityZipCode NVARCHAR(255),
+    StreetType NVARCHAR(255),
+    StreetName NVARCHAR(255)
 );
 
 CREATE TABLE DIM_BUILD_YEAR (
@@ -69,7 +69,7 @@ CREATE TABLE DIM_BUILD_YEAR (
 
 CREATE TABLE DIM_BILLING (
     Id INT PRIMARY KEY,
-    BillingClass VARCHAR(255)
+    BillingClass NVARCHAR(255)
 );
 
 CREATE TABLE DIM_SALE_DATE (
@@ -81,25 +81,25 @@ CREATE TABLE DIM_SALE_DATE (
 
 CREATE TABLE DIM_OWNERSHIP (
     Id INT PRIMARY KEY,
-    OwnershipDesc VARCHAR(255)
+    OwnershipDesc NVARCHAR(255)
 );
 
 CREATE TABLE DIM_ACTIVITY (
     Id INT PRIMARY KEY,
-    ActivityDesc VARCHAR(255)
+    ActivityDesc NVARCHAR(255)
 );
 
 CREATE TABLE DIM_FUNCTION (
     Id INT PRIMARY KEY,
-    FunctionDesc VARCHAR(255)
+    FunctionDesc NVARCHAR(255)
 );
 
 CREATE TABLE DIM_STRUCTURE (
     Id INT PRIMARY KEY,
-    StructureDesc VARCHAR(255)
+    StructureDesc NVARCHAR(255)
 );
 
 CREATE TABLE DIM_SITE (
     Id INT PRIMARY KEY,
-    SiteDesc VARCHAR(255)
+    SiteDesc NVARCHAR(255)
 );
